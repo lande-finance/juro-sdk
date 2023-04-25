@@ -1,6 +1,9 @@
-# Very short description of the package
+# Description of the package
 
-SDK Juro Kit for Laravel framework
+SDK Juro Kit for Laravel framework.
+Consumes JURO api https://api-docs.juro.com/
+
+At a moment this package supports only createContract method.
 
 ## Requirements
 - PHP >= 8.0
