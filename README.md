@@ -1,13 +1,17 @@
 # Very short description of the package
 
-Internal Lande SDK Juro Kit
+SDK Juro Kit for Laravel framework
+
+## Requirements
+- PHP >= 8.0
+- Laravel >= 9.0
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require lande/juro-sdk
+composer require hashstudio/juro-sdk
 ```
 
 ## Usage
