@@ -33,7 +33,7 @@ class JuroSdkServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'juro-sdk');
 
         // Register the main class to use with the facade
-        $this->app->singleton('juro-sdk', function () {
+        $this->app->singleton(JuroSdk::class, function () {
             return new JuroSdk(config('juro-sdk.api_key'), config('juro-sdk.debug'));
         });
     }
