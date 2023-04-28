@@ -13,7 +13,7 @@ use Psr\Http\Message\ResponseInterface;
 class JuroSdk
 {
 
-    const CONTACTS_METHOD = 'contacts';
+    const CONTRACTS_METHOD = 'contracts';
     const TEMPLATES_METHOD = 'templates';
     const BASE_URL = 'https://api.juro.com/v3/';
 
@@ -48,7 +48,7 @@ class JuroSdk
 
     public function createContract(array $data): array
     {
-        $response = $this->getClient()->post(self::CONTACTS_METHOD, $data);
+        $response = $this->getClient()->post(self::CONTRACTS_METHOD, $data);
 
         return $response->json();
     }

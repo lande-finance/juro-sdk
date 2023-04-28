@@ -26,7 +26,7 @@ class JuroSdkTest extends TestCase
         $data = ['key' => 'value'];
 
         Http::fake([
-            JuroSdk::BASE_URL . JuroSdk::CONTACTS_METHOD => Http::response([
+            JuroSdk::BASE_URL . JuroSdk::CONTRACTS_METHOD => Http::response([
                 'result' => 'success',
             ], 200),
         ]);
@@ -34,7 +34,7 @@ class JuroSdkTest extends TestCase
         $response = $this->juroSdk->createContract($data);
 
         Http::assertSent(function (Request $request) use ($data) {
-            return $request->url() == JuroSdk::BASE_URL . JuroSdk::CONTACTS_METHOD &&
+            return $request->url() == JuroSdk::BASE_URL . JuroSdk::CONTRACTS_METHOD &&
                 $request->hasHeader('x-api-key', 'test_api_key') &&
                 $request->data() == $data;
         });
