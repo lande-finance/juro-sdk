@@ -34,7 +34,7 @@ class JuroSdkServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('juro-sdk', function () {
-            return new JuroSdk;
+            return new JuroSdk(config('juro-sdk.api_key'), config('juro-sdk.debug'));
         });
     }
 }
