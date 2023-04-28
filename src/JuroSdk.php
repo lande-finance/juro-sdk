@@ -2,8 +2,13 @@
 
 namespace Hashstudio\JuroSdk;
 
+use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Message;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class JuroSdk
 {
@@ -12,37 +17,52 @@ class JuroSdk
     const TEMPLATES_METHOD = 'templates';
     const BASE_URL = 'https://api.juro.com/v3/';
 
-    private string $apiKey;
-    public function __construct()
+    public function __construct(readonly string $apiKey, readonly bool $debug = false)
     {
-        $this->apiKey = config('juro-sdk.api-key');
     }
 
     public function getClient(): PendingRequest
     {
-        return Http::withHeaders([
+        $debugMiddleware = Middleware::mapRequest(function (RequestInterface $request) {
+            Log::debug('[Fintech market debug] Request: ' . Message::toString($request) . '\n\n');
+            return $request;
+        });
+        $responseMiddleware = Middleware::mapResponse(function (ResponseInterface $response) {
+            Log::debug('[Fintech market debug] Request: ' . Message::toString($response) . '\n\n');
+            return $response;
+        });
+
+        $request = Http::withOptions(['base_uri' => self::BASE_URL , 'debug' => $this->debug])
+        ->withHeaders([
             'content-type' => 'application/json',
             'x-api-key' => $this->apiKey,
         ]);
+
+        if ($this->debug) {
+            $request->withMiddleware($debugMiddleware);
+            $request->withMiddleware($responseMiddleware);
+        }
+
+        return $request;
     }
 
     public function createContract(array $data): array
     {
-        $response = $this->getClient()->post(self::BASE_URL . self::CONTACTS_METHOD, $data);
+        $response = $this->getClient()->post(self::CONTACTS_METHOD, $data);
 
         return $response->json();
     }
 
     public function getTemplates(): array
     {
-        $response = $this->getClient()->get(self::BASE_URL . self::TEMPLATES_METHOD);
+        $response = $this->getClient()->get(self::TEMPLATES_METHOD);
 
         return $response->json();
     }
 
     public function getTemplateById(string $templateId): array
     {
-        $response = $this->getClient()->get(self::BASE_URL . self::TEMPLATES_METHOD . '/' . $templateId);
+        $response = $this->getClient()->get(self::TEMPLATES_METHOD . '/' . $templateId);
 
         return $response->json();
     }

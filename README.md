@@ -24,7 +24,7 @@ php artisan vendor:publish --tag=juro-sdk-config
 ```
 
 ```php
-$sdk = new \Hashstudio\JuroSdk\JuroSdk();
+$sdk = app(JuroSDK::class);
 
 $data = [
     "templateId" => "643fef1bfec94c08f5f5e67a",
