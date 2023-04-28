@@ -24,11 +24,11 @@ class JuroSdk
     public function getClient(): PendingRequest
     {
         $debugMiddleware = Middleware::mapRequest(function (RequestInterface $request) {
-            Log::debug('[Fintech market debug] Request: ' . Message::toString($request) . '\n\n');
+            Log::debug('[JuroSdk market debug] Request: ' . Message::toString($request) . '\n\n');
             return $request;
         });
         $responseMiddleware = Middleware::mapResponse(function (ResponseInterface $response) {
-            Log::debug('[Fintech market debug] Request: ' . Message::toString($response) . '\n\n');
+            Log::debug('[JuroSdk market debug] Request: ' . Message::toString($response) . '\n\n');
             return $response;
         });
 
