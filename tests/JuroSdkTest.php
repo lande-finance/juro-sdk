@@ -3,22 +3,27 @@
 namespace Hashstudio\JuroSdk\Tests;
 
 use Hashstudio\JuroSdk\JuroSdk;
+use Hashstudio\JuroSdk\JuroSdkServiceProvider;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
-use Tests\TestCase;
+use Orchestra\Testbench\TestCase;
 
 class JuroSdkTest extends TestCase
 {
     private JuroSdk $juroSdk;
 
+    protected function getPackageProviders($app): array
+    {
+        return [JuroSdkServiceProvider::class];
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        // Set the Juro API key in the config for testing purposes
-        config(['juro-sdk.api-key' => 'test_api_key']);
+        config(['juro-sdk.api_key' => 'test_api_key']);
 
-        $this->juroSdk = new JuroSdk();
+        $this->juroSdk = new JuroSdk('test_api_key');
     }
 
     public function testCreateContract(): void
@@ -58,7 +63,7 @@ class JuroSdkTest extends TestCase
         Http::assertSent(function (Request $request) {
             return $request->url() == JuroSdk::BASE_URL . JuroSdk::TEMPLATES_METHOD &&
                 $request->hasHeader('x-api-key', 'test_api_key') &&
-                $request->isGet();
+                $request->method() === 'GET';
         });
 
         $this->assertSame([

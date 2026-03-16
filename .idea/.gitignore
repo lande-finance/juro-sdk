@@ -1,0 +1,18 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Ignored default folder with query files
+/queries/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+/copilot.data.migration.ask2agent.xml
+/juro-sdk.iml
+/laravel-idea.xml
+/laravel-idea-personal.xml
+/modules.xml
+/php.xml
+/phpunit.xml
+/vcs.xml

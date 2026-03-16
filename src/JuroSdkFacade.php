@@ -5,7 +5,7 @@ namespace Hashstudio\JuroSdk;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Lande\JuroSdk\Skeleton\SkeletonClass
+ * @see \Hashstudio\JuroSdk\JuroSdk
  */
 class JuroSdkFacade extends Facade
 {
@@ -16,6 +16,6 @@ class JuroSdkFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'juro-sdk';
+        return JuroSdk::class;
     }
 }
